@@ -23,6 +23,7 @@ RUN yum -y install rpm dnf-plugins-core \
  && yum -y install \
       sudo \
       which \
+      ca-certificates \
  && yum clean all
 
 # Disable requiretty.
