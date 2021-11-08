@@ -24,6 +24,7 @@ RUN yum -y install rpm dnf-plugins-core \
       sudo \
       which \
       hostname \
+      procps-ng \
       ca-certificates \
  && yum clean all
 
