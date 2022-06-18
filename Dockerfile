@@ -36,4 +36,4 @@ RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 
 VOLUME ["/sys/fs/cgroup"]
 
-CMD ["/usr/lib/systemd/systemd"]
+CMD ["/usr/sbin/init"]
