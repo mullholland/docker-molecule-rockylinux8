@@ -1,26 +1,25 @@
 FROM rockylinux/rockylinux:8
 
 LABEL maintainer="mullholland"
-LABEL build_update="2022-04-30"
+LABEL build_update="2022-06-18"
 
 ENV container=docker
 
-# Install systemd -- See https://hub.docker.com/_/centos/
+# Install systemd -- See https://hub.docker.com/r/rockylinux/rockylinux
 RUN yum -y update; yum clean all; \
-  cd /lib/systemd/system/sysinit.target.wants/ ; \
-  for i in * ; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i ; done ; \
-  rm -f /lib/systemd/system/multi-user.target.wants/* ; \
-  rm -f /etc/systemd/system/*.wants/* ; \
-  rm -f /lib/systemd/system/local-fs.target.wants/* ; \
-  rm -f /lib/systemd/system/sockets.target.wants/*udev* ; \
-  rm -f /lib/systemd/system/sockets.target.wants/*initctl* ; \
-  rm -f /lib/systemd/system/basic.target.wants/* ; \
-  rm -f /lib/systemd/system/anaconda.target.wants/*
+  # (cd /lib/systemd/system/sysinit.target.wants/; \
+  # for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+  rm -f /lib/systemd/system/multi-user.target.wants/*;\
+  rm -f /etc/systemd/system/*.wants/*;\
+  rm -f /lib/systemd/system/local-fs.target.wants/*; \
+  rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+  rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+  rm -f /lib/systemd/system/basic.target.wants/*;\
+  rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install requirements.
-RUN yum -y install rpm dnf-plugins-core \
+RUN yum -y install rpm dnf-plugins-core initscripts \
  && yum -y update \
- && yum -y config-manager --set-enabled powertools \
  && yum -y install \
       sudo \
       which \
@@ -36,4 +35,4 @@ RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 
 VOLUME ["/sys/fs/cgroup"]
 
-CMD ["/usr/lib/systemd/systemd"]
+CMD ["/usr/sbin/init"]
