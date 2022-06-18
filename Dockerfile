@@ -1,7 +1,7 @@
 FROM rockylinux/rockylinux:8
 
 LABEL maintainer="mullholland"
-LABEL build_update="2022-04-30"
+LABEL build_update="2022-06-18"
 
 ENV container=docker
 
