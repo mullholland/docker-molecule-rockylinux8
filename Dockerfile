@@ -7,8 +7,8 @@ ENV container=docker
 
 # Install systemd -- See https://hub.docker.com/r/rockylinux/rockylinux
 RUN yum -y update; yum clean all; \
-  (cd /lib/systemd/system/sysinit.target.wants/; \
-  for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+  # (cd /lib/systemd/system/sysinit.target.wants/; \
+  # for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
   rm -f /lib/systemd/system/multi-user.target.wants/*;\
   rm -f /etc/systemd/system/*.wants/*;\
   rm -f /lib/systemd/system/local-fs.target.wants/*; \
@@ -18,9 +18,8 @@ RUN yum -y update; yum clean all; \
   rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install requirements.
-RUN yum -y install rpm dnf-plugins-core \
+RUN yum -y install rpm dnf-plugins-core initscripts \
  && yum -y update \
- && yum -y config-manager --set-enabled powertools \
  && yum -y install \
       sudo \
       which \
